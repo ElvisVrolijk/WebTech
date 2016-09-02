@@ -5,19 +5,17 @@
 </head>
 <body>
 <h1>Welcome to The Elvis Hotel</h1>
-<form method="post" action="main">
+<form method="post" action="login">
     Login or Register
     <br>
-    Users.User name
+    Username
     <input type="text" name="username">
     <br>
     Password
     <input type="password" name="password">
     <br>
-    <input type="submit" value="Sign in">
-</form>
-<form method="get" action="register.html">
-    <input type="submit" value="Register">
+    <button type="submit">Login</button>
+    <button type="button" onclick="window.location.href='/register.html'">Register</button>
 </form>
 </body>
 </html>
