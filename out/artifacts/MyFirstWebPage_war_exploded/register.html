@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<h1>
+    Welcome to the registration page.
+    <br>
+    Please fill in the form.
+
+</h1>
+<form method="post" action="/Servlets.RegisterServlet">
+    Username:
+    <input type="text" name="username">
+    <br>
+    Password:
+    <input type="password" name="password">
+    <br>
+    <input type="radio" name="user" value="landlord"> I am a Landlord
+    <br>
+    <input type="radio" name="user" value="Tenant"> I am a tenant
+    <br>
+    <input type="submit" value="Register">
+</form>
+</body>
+</html>
