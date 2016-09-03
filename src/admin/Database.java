@@ -18,6 +18,9 @@ import java.util.List;
  * Handles the database system.
  * This contains all the user information.
  * Created by Derwin on 31-Aug-16.
+ * // TODO: 03-Sep-16 Extra functionality: remove room
+ * // TODO: 03-Sep-16 Extra functionality: modify room
+ * // TODO: 03-Sep-16 Statistical Data. Visits to pages should be logged according to the user who visited.
  */
 public class Database {
 
@@ -86,6 +89,15 @@ public class Database {
 
         }
         throw new UserNotFoundException("User does not exist.");
+    }
+
+    public void addRoom() {
+        // TODO: 03-Sep-16 Implementation
+    }
+
+    public Room etRoomByCriteria(int size, int bedroom, String city) {
+        // TODO: 03-Sep-16 Implementation
+        return null;
     }
 
     /**
