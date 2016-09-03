@@ -27,7 +27,8 @@ public class Database {
     ///////////////////////////////////////////////////////////////////////////
     // Constant
     ///////////////////////////////////////////////////////////////////////////
-    private static final String DATABASE_FILE = "user.json";
+    private static final String USER_FILE = "user.json";
+    private static final String ROOM_FILE = "room.json";
 
     private static Database instance;
 
@@ -52,7 +53,7 @@ public class Database {
      */
     private Database() {
         //no instance
-        loadData();
+        loadUserData();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -76,7 +77,7 @@ public class Database {
         }
 
         users.add(user); //Add to the list
-        updateData(); //Update the json file
+        updateUserData(); //Update the json file
     }
 
     /**
@@ -98,6 +99,7 @@ public class Database {
 
     /**
      * Adds the room given in as the argument.
+     *
      * @param room The room to be added.
      */
     public void addRoom(Room room) {
@@ -107,9 +109,10 @@ public class Database {
 
     /**
      * Finds a room based on the criteria given.
-     * @param size The size of the room in square meters.
+     *
+     * @param size  The size of the room in square meters.
      * @param price The maximum price of the room.
-     * @param city The location of the room.
+     * @param city  The location of the room.
      * @return Returns the room if it was found, otherwise null.
      */
     public Room getRoomByCriteria(int size, int price, String city) {
@@ -147,29 +150,21 @@ public class Database {
     /**
      * Reads data from file.
      */
-    private void loadData() {
+    private void loadUserData() {
         try {
-            File file = new File(DATABASE_FILE);
+            File file = new File(USER_FILE);
             if (!file.exists()) {
                 //File doesn't exist
                 file.createNewFile();
             }
-            //Read data
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            StringBuilder builder = new StringBuilder();
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                builder.append(line);
-            }
-            String data = builder.toString();
-
-            //Deserialize
-            List<User> users = deserializeUsers(data);
-            if (users != null) {
-                this.users = deserializeUsers(data);
+            String data = readStringFromFile(file);
+            if (data.length() != 0) { //Check whether there's data
+                //Deserialize
+                List<User> users = deserializeUsers(data);
+                if (users != null) {
+                    this.users = deserializeUsers(data);
+                }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -179,9 +174,9 @@ public class Database {
     /**
      * Updates the file with new data.
      */
-    private void updateData() {
+    private void updateUserData() {
         try {
-            FileWriter fileWriter = new FileWriter(DATABASE_FILE);
+            FileWriter fileWriter = new FileWriter(USER_FILE);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             String json = serializeUsers(users);
             bufferedWriter.write(json);
@@ -189,6 +184,30 @@ public class Database {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Reads data from the file as a string.
+     *
+     * @param file The file to be read.
+     * @return Returns the data as a string.
+     */
+    private String readStringFromFile(File file) throws IOException {
+        assert file != null : "Filename can not be null";
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        StringBuilder builder = new StringBuilder();
+        String line;
+
+        //Go through all the lines of the file
+        while ((line = bufferedReader.readLine()) != null) {
+            builder.append(line);
+        }
+
+        bufferedReader.close();
+        return builder.toString();
     }
 
     /**
