@@ -27,7 +27,7 @@ public class Database {
     ///////////////////////////////////////////////////////////////////////////
     // Constant
     ///////////////////////////////////////////////////////////////////////////
-    private static final String DATABASE_FILE = "data.json";
+    private static final String DATABASE_FILE = "user.json";
 
     private static Database instance;
 
@@ -35,6 +35,7 @@ public class Database {
     // Properties
     ///////////////////////////////////////////////////////////////////////////
     private List<User> users = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
 
     /**
      * @return The instance of this database.
@@ -68,6 +69,8 @@ public class Database {
      * @throws DuplicateUserException if the user is already registered.
      */
     public void addUser(User user) throws DuplicateUserException {
+        assert user != null : "User can not be null";
+
         if (userExists(user)) {
             throw new DuplicateUserException("Username already exist in database.");
         }
@@ -81,6 +84,8 @@ public class Database {
      * @throws UserNotFoundException if the user was not found in database.
      */
     public User getUserByUsername(String username) throws UserNotFoundException {
+        assert username != null : "Username can not be null";
+
         for (User user : users) { //Go through all users
             String registeredUsername = user.getUsername();
             if (username.equals(registeredUsername)) {
@@ -91,12 +96,36 @@ public class Database {
         throw new UserNotFoundException("User does not exist.");
     }
 
-    public void addRoom() {
-        // TODO: 03-Sep-16 Implementation
+    /**
+     * Adds the room given in as the argument.
+     * @param room The room to be added.
+     */
+    public void addRoom(Room room) {
+        assert room != null : "Room can not be null";
+        rooms.add(room);
     }
 
-    public Room etRoomByCriteria(int size, int bedroom, String city) {
-        // TODO: 03-Sep-16 Implementation
+    /**
+     * Finds a room based on the criteria given.
+     * @param size The size of the room in square meters.
+     * @param price The maximum price of the room.
+     * @param city The location of the room.
+     * @return Returns the room if it was found, otherwise null.
+     */
+    public Room getRoomByCriteria(int size, int price, String city) {
+        assert city != null : "City can not be null";
+        assert !city.isEmpty() : "City name can not be empty";
+
+        for (Room room : rooms) {
+            int roomSize = room.getSize();
+            int roomPrice = room.getPrice();
+            String roomCity = room.getCity();
+
+            if (roomSize == size && roomPrice <= price && roomCity.equals(city)) {
+                //Found room
+                return room;
+            }
+        }
         return null;
     }
 

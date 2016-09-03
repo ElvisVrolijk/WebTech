@@ -9,60 +9,40 @@ public class Room {
     ///////////////////////////////////////////////////////////////////////////
     // Properties
     ///////////////////////////////////////////////////////////////////////////
-    private String name;
-    private int numberOfBedroom;
-    private int numberOfBathroom;
-    private int numberOfKitchen;
+    private int size;
+    private int price;
+    private String city;
 
     /**
      * Constructor
+     *
+     * @param size  Size of the room in square meters.
+     * @param price Price of the room.
+     * @param city  Location of the room.
      */
-    public Room(String name, int numberOfBedroom, int numberOfBathroom, int numberOfKitchen) {
+    public Room(int size, int price, String city) {
         //Preconditions
-        assert name != null;
-        assert !name.isEmpty();
-        assert 0 <= numberOfBedroom && numberOfBedroom <= 7;
-        assert 0 <= numberOfBathroom && numberOfBathroom <= 5;
-        assert 0 <= numberOfKitchen && numberOfKitchen <= 3;
+        assert city != null : "City can not be null";
+        assert !city.isEmpty() : "City name can not be empty";
 
-        this.name = name;
-        this.numberOfBedroom = numberOfBedroom;
-        this.numberOfBathroom = numberOfBathroom;
-        this.numberOfKitchen = numberOfKitchen;
+        this.size = size;
+        this.price = price;
+        this.city = city;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // Methods
     ///////////////////////////////////////////////////////////////////////////
-    public String getName() {
-        return name;
+
+    public int getSize() {
+        return size;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getPrice() {
+        return price;
     }
 
-    public int getNumberOfBedroom() {
-        return numberOfBedroom;
-    }
-
-    public void setNumberOfBedroom(int numberOfBedroom) {
-        this.numberOfBedroom = numberOfBedroom;
-    }
-
-    public int getNumberOfBathroom() {
-        return numberOfBathroom;
-    }
-
-    public void setNumberOfBathroom(int numberOfBathroom) {
-        this.numberOfBathroom = numberOfBathroom;
-    }
-
-    public int getNumberOfKitchen() {
-        return numberOfKitchen;
-    }
-
-    public void setNumberOfKitchen(int numberOfKitchen) {
-        this.numberOfKitchen = numberOfKitchen;
+    public String getCity() {
+        return city;
     }
 }
