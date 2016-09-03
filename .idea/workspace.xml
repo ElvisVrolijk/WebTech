@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="68b9ad98-fce3-4ddc-9324-ed3d0772558e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/admin/Database.java" afterPath="$PROJECT_DIR$/src/admin/Database.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/DuplicateUserException.java" afterPath="$PROJECT_DIR$/src/exception/DuplicateUserException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/UserNotFoundException.java" afterPath="$PROJECT_DIR$/src/exception/UserNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/Landlord.java" afterPath="$PROJECT_DIR$/src/user/Landlord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/Tenant.java" afterPath="$PROJECT_DIR$/src/user/Tenant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/User.java" afterPath="$PROJECT_DIR$/src/user/User.java" />
     </list>
     <ignored path="MyFirstWebPage.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,31 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LoginServlet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/servlet/LoginServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Room.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/admin/Room.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/admin/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+            <state relative-caret-position="-1105">
+              <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,18 +74,14 @@
         <option value="$PROJECT_DIR$/src/Admin/Room.java" />
         <option value="$PROJECT_DIR$/src/Admin/Admin.java" />
         <option value="$PROJECT_DIR$/src/servlet/MyServlet.java" />
-        <option value="$PROJECT_DIR$/src/exception/UserNotFoundException.java" />
         <option value="$PROJECT_DIR$/web/error.html" />
         <option value="$PROJECT_DIR$/web/tenant.html" />
         <option value="$PROJECT_DIR$/web/addroom.html" />
-        <option value="$PROJECT_DIR$/src/user/Tenant.java" />
-        <option value="$PROJECT_DIR$/src/user/Landlord.java" />
         <option value="$PROJECT_DIR$/src/admin/Room.java" />
         <option value="$PROJECT_DIR$/web/index.html" />
         <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/web/login.html" />
         <option value="$PROJECT_DIR$/web/register.html" />
-        <option value="$PROJECT_DIR$/src/user/User.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/tenant.html" />
         <option value="$PROJECT_DIR$/web/WEB-INF/addroom.html" />
         <option value="$PROJECT_DIR$/web/WEB-INF/landlord.html" />
@@ -110,6 +90,11 @@
         <option value="$PROJECT_DIR$/src/servlet/RoomSearchServlet.java" />
         <option value="$PROJECT_DIR$/src/servlet/LoginServlet.java" />
         <option value="$PROJECT_DIR$/src/admin/Database.java" />
+        <option value="$PROJECT_DIR$/src/user/User.java" />
+        <option value="$PROJECT_DIR$/src/user/Tenant.java" />
+        <option value="$PROJECT_DIR$/src/user/Landlord.java" />
+        <option value="$PROJECT_DIR$/src/exception/DuplicateUserException.java" />
+        <option value="$PROJECT_DIR$/src/exception/UserNotFoundException.java" />
       </list>
     </option>
   </component>
@@ -164,6 +149,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -288,9 +275,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -849,7 +834,8 @@
       <updated>1472563374300</updated>
       <workItem from="1472563379233" duration="16518000" />
       <workItem from="1472814963492" duration="1109000" />
-      <workItem from="1472816431871" duration="16510000" />
+      <workItem from="1472816431871" duration="16749000" />
+      <workItem from="1472900013140" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="Polish project">
       <created>1472867759680</created>
@@ -858,11 +844,18 @@
       <option name="project" value="LOCAL" />
       <updated>1472867759680</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Modify structure&#10;&#10;Added extra methods to be implemented in the future">
+      <created>1472868043580</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1472868043580</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34137000" />
+    <option name="totallyTimeSpent" value="34389000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -870,23 +863,20 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30972517" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30972517" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.4946401" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18006264" sideWeight="0.5053599" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -896,7 +886,10 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -912,7 +905,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Polish project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Polish project" />
+    <MESSAGE value="Modify structure&#10;&#10;Added extra methods to be implemented in the future" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modify structure&#10;&#10;Added extra methods to be implemented in the future" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -937,7 +932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -945,7 +939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="53" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -959,14 +952,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java" />
     <entry file="file://$PROJECT_DIR$/src/admin/Room.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1003,7 +989,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1011,7 +996,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="53" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1025,14 +1009,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java" />
     <entry file="file://$PROJECT_DIR$/src/admin/Room.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1057,61 +1034,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/index.jsp" />
-    <entry file="file://$PROJECT_DIR$/web/error.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="35" column="49" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/Landlord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/Tenant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/admin/Admin.java" />
     <entry file="jar://$PROJECT_DIR$/lib/gson-2.7.jar!/com/google/gson/internal/LinkedTreeMap.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-544">
           <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1119,67 +1046,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
-          <folding>
-            <element signature="e#828#829#0" expanded="false" />
-            <element signature="e#852#853#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/user/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="110" selection-start-line="22" selection-start-column="110" selection-end-line="22" selection-end-column="110" />
+        <state relative-caret-position="206">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/register.html">
+    <entry file="file://$PROJECT_DIR$/src/user/Tenant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        <state relative-caret-position="85">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/Landlord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/servlet/RegisterServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/servlet/LogoutServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/landlord.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="86" selection-start-line="7" selection-start-column="86" selection-end-line="7" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/tenant.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/addroom.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -1194,45 +1091,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/exception/DuplicateUserException.java">
+    <entry file="file://$PROJECT_DIR$/src/servlet/LogoutServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exception/UserNotFoundException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="238">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <element signature="e#174#175#0" expanded="true" />
-            <element signature="e#204#205#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/servlet/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
+        <state relative-caret-position="765">
           <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/DuplicateUserException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/UserNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/admin/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+        <state relative-caret-position="51">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/landlord.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="86" selection-start-line="7" selection-start-column="86" selection-end-line="7" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/addroom.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/tenant.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/admin/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+        <state relative-caret-position="-1105">
+          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

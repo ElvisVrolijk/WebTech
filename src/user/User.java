@@ -20,7 +20,7 @@ public class User {
     /**
      * Constructor
      */
-    public User(String firstName, String lastName, String username, String password) throws RuntimeException {
+    User(String firstName, String lastName, String username, String password) throws RuntimeException {
         //Precondition
         assert firstName != null;
         assert lastName != null;
