@@ -1,13 +1,17 @@
 package admin;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.stream.MalformedJsonException;
 import exception.DuplicateUserException;
 import exception.UserNotFoundException;
+import user.Landlord;
+import user.Tenant;
 import user.User;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -152,13 +156,30 @@ public class Database {
      * @return The json in String
      */
     private String serializeUsers(List<User> users) {
+        assert users != null : "Users should not be null";
+
         //Precondition
         if (users.size() == 0) {
             return null;
         }
-
         Gson gson = new Gson();
-        return gson.toJson(users);
+
+        //This is a simple solution to avoid instantiating abstract object from json
+        //In this case the users is split into two list, one being tenants and the other being landlord.
+        //These 2 list will be later on exported to the data.json file in a single file.
+        List<Tenant> tenants = new ArrayList<>();
+        List<Landlord> landlords = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Tenant) {
+                tenants.add((Tenant) user);
+            } else if (user instanceof Landlord) {
+                landlords.add((Landlord) user);
+            }
+        }
+        Object[] objects = new Object[2];
+        objects[0] = tenants;
+        objects[1] = landlords;
+        return gson.toJson(objects);
     }
 
     /**
@@ -166,18 +187,54 @@ public class Database {
      *
      * @return The list of users from json String.
      */
-    private List<User> deserializeUsers(String json) {
+    private List<User> deserializeUsers(String json) throws MalformedJsonException {
+        assert json != null : "JSON is null";
+
         //Precondition
         if (json.length() == 0) {
             return null;
         }
-
         Gson gson = new Gson();
-        User[] userObjects = gson.fromJson(json, User[].class);
-
+        Object[] objects = gson.fromJson(json, Object[].class);
+        Object tenants = objects[0];
+        Object landlords = objects[1];
 
         ArrayList<User> users = new ArrayList<>();
-        Collections.addAll(users, userObjects);
+
+        //This is not the best solution, but works so far.
+        //Can still be improved in upcoming versions.
+        if (tenants instanceof List && landlords instanceof List) {
+            //Go through all tenants
+            for (int i = 0; i < ((List) tenants).size(); i++) {
+                Object tenant = ((List) tenants).get(i);
+                if (tenant instanceof LinkedTreeMap) {
+                    Collection values = ((LinkedTreeMap) tenant).values();
+                    Object[] properties = values.toArray();
+                    String firstName = (String) properties[0];
+                    String lastName = (String) properties[1];
+                    String username = (String) properties[2];
+                    String password = (String) properties[3];
+                    users.add(new Tenant(firstName, lastName, username, password));
+                }
+            }
+
+            //Go through all landlords
+            for (int i = 0; i < ((List) landlords).size(); i++) {
+                Object landlord = ((List) landlords).get(i);
+                if (landlord instanceof LinkedTreeMap) {
+                    Collection values = ((LinkedTreeMap) landlord).values();
+                    Object[] properties = values.toArray();
+                    String firstName = (String) properties[0];
+                    String lastName = (String) properties[0];
+                    String username = (String) properties[0];
+                    String password = (String) properties[0];
+                    users.add(new Landlord(firstName, lastName, username, password));
+                }
+            }
+        } else {
+            //Database file is corrupted
+            throw new MalformedJsonException("Database json file is malformed.");
+        }
         return users;
     }
 }

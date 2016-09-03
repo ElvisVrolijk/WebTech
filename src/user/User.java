@@ -12,7 +12,7 @@ Create a user that meets the requirements
 // Abstract because I do not want a user instances.
 public class User {
 
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String username;
     private String password;
@@ -20,21 +20,25 @@ public class User {
     /**
      * Constructor
      */
-    public User(String firstName, String lastName, String username, String password) {
+    public User(String firstName, String lastName, String username, String password) throws RuntimeException {
         //Precondition
         assert firstName != null;
         assert lastName != null;
         assert username != null;
         assert password != null;
 
-        this.fistName = firstName;
+        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            throw new IllegalArgumentException("User credentials can not contain empty value");
+        }
+
+        this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
     }
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {

@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Registration</title>
 </head>
 <body>
-<h1>
-    Welcome to the registration page.
-    <br>
-    Please fill in the form.
-
-</h1>
+<h1>Register</h1>
 <form method="post" action="register">
     <input type="text" name="first_name" placeholder="First Name"><br>
     <input type="text" name="last_name" placeholder="Last Name"><br>
@@ -21,6 +15,7 @@
     <input type="radio" name="user" value="Tenant"> I am a tenant
     <br>
     <button type="submit">Register</button>
+    <button type="button" onclick="window.location.href='./login.html'">Back</button>
 </form>
 </body>
 </html>

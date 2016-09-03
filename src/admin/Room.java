@@ -1,40 +1,45 @@
 package admin;
 
 /**
+ * Represents a room.
+ * This can be rented by a tenant.
  * Created by e_voe_000 on 9/1/2016.
  */
-
-/*
-Landlords can add room to be rented by tenants
- */
-
 public class Room {
-    private String roomName;
+    ///////////////////////////////////////////////////////////////////////////
+    // Properties
+    ///////////////////////////////////////////////////////////////////////////
+    private String name;
     private int numberOfBedroom;
     private int numberOfBathroom;
     private int numberOfKitchen;
 
-    public Room(String roomName, int numberOfBedroom, int numberOfBathroom, int numberOfKitchen) {
-        //Test Room
-
-        assert roomName != null;
-        assert !roomName.isEmpty();
+    /**
+     * Constructor
+     */
+    public Room(String name, int numberOfBedroom, int numberOfBathroom, int numberOfKitchen) {
+        //Preconditions
+        assert name != null;
+        assert !name.isEmpty();
         assert 0 <= numberOfBedroom && numberOfBedroom <= 7;
         assert 0 <= numberOfBathroom && numberOfBathroom <= 5;
         assert 0 <= numberOfKitchen && numberOfKitchen <= 3;
 
-        this.roomName = roomName;
+        this.name = name;
         this.numberOfBedroom = numberOfBedroom;
         this.numberOfBathroom = numberOfBathroom;
         this.numberOfKitchen = numberOfKitchen;
     }
 
-    public String getRoomName() {
-        return roomName;
+    ///////////////////////////////////////////////////////////////////////////
+    // Methods
+    ///////////////////////////////////////////////////////////////////////////
+    public String getName() {
+        return name;
     }
 
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getNumberOfBedroom() {
