@@ -226,7 +226,7 @@ public class Database {
 
         //This is a simple solution to avoid instantiating abstract object from json
         //In this case the users is split into two list, one being tenants and the other being landlord.
-        //These 2 list will be later on exported to the data.json file in a single file.
+        //These 2 list will be later on exported to a single file data.json.
         List<Tenant> tenants = new ArrayList<>();
         List<Landlord> landlords = new ArrayList<>();
         for (User user : users) {
