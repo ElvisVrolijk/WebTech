@@ -3,7 +3,7 @@ package user;
 /**
  * Represents a tenant user.
  * This user is able to view house that are for renting only.
- *
+ * <p>
  * Created by e_voe_000 on 9/1/2016.
  */
 public class Tenant extends User {

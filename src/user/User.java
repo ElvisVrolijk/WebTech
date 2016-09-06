@@ -2,16 +2,15 @@ package user;
 
 /**
  * Represents a user.
+ * <p>
  * Created by e_voe_000 on 9/1/2016.
  */
 
-/*
-Create a user that meets the requirements
- */
+public abstract class User {
 
-// Abstract because I do not want a user instances.
-public class User {
-
+    ///////////////////////////////////////////////////////////////////////////
+    // Properties
+    ///////////////////////////////////////////////////////////////////////////
     private String firstName;
     private String lastName;
     private String username;
@@ -27,8 +26,13 @@ public class User {
         assert username != null;
         assert password != null;
 
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("User credentials can not contain empty value");
+        boolean emptyFirstName = firstName.isEmpty();
+        boolean emptyLastName = lastName.isEmpty();
+        boolean emptyUsername = username.isEmpty();
+        boolean emptyPassword = password.isEmpty();
+
+        if (emptyFirstName || emptyLastName || emptyUsername || emptyPassword) {
+            throw new IllegalArgumentException("One or more credential is empty");
         }
 
         this.firstName = firstName;
@@ -36,6 +40,10 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     public String getFirstName() {
         return firstName;

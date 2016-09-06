@@ -1,6 +1,7 @@
 package servlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,13 +12,12 @@ import java.io.IOException;
  * <p>
  * Created by Derwin on 03-Sep-16.
  */
+@WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*IMPLEMENTATION
-        * Should replace the cookie with
-        * one that has 0 max age
-        * */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().invalidate(); //Remove the session
+        response.sendRedirect("/login.html");
     }
 }
