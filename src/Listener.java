@@ -2,6 +2,7 @@
  * Created by Derwin on 06-Sep-16.
  */
 
+import admin.Room;
 import com.google.gson.Gson;
 import com.sun.xml.internal.stream.util.BufferAllocator;
 import user.Landlord;
@@ -28,7 +29,8 @@ public class Listener implements ServletContextListener,
     ///////////////////////////////////////////////////////////////////////////
     // Properties
     ///////////////////////////////////////////////////////////////////////////
-    private List<User> users = new ArrayList<User>();
+    private List<User> users = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
 
     // Public constructor is required by servlet spec
     public Listener() {
@@ -45,6 +47,9 @@ public class Listener implements ServletContextListener,
 
         users.add(new Landlord("Derwin", "Tromp", "admin", "admin"));
         users.add(new Tenant("Elvis", "Vrolijk", "user", "user"));
+
+        rooms.add(new Room(50, 800, "Enschede"));
+        rooms.add(new Room(60, 900, "Enschede"));
 
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("Users", users);
