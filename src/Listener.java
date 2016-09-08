@@ -53,6 +53,7 @@ public class Listener implements ServletContextListener,
 
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("Users", users);
+        servletContext.setAttribute("Rooms", rooms);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
