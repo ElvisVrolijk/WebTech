@@ -76,7 +76,7 @@ public class TenantServlet extends AbstractUserServlet {
                 boolean isBigger = room.getSize() >= size;
                 boolean isLessExpensive = room.getPrice() <= price;
 
-                if (sameCity && isBigger && isLessExpensive) {
+                if (sameCity || isBigger || isLessExpensive) {
                     writer.println("<tr>");
                     writer.println("<td>" + room.getCity() + "</td>");
                     writer.println("<td>" + room.getSize() + "</td>");
@@ -87,6 +87,7 @@ public class TenantServlet extends AbstractUserServlet {
                     writer.println("<tr><td>No rooms match criteria</td></tr>");
                     break;
                 }
+                writer.println("<button type='button' onclick='window.location.href=\"tenant\"'></button>");
             }
             writer.println("</table>");
         }
