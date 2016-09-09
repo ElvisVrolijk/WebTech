@@ -60,7 +60,7 @@ public class LandlordServlet extends AbstractUserServlet {
                 writer.println("</tr>");
             }
             writer.println("<tr><td><button type='submit' name='add_room' value='0'>Add</button></td>" +
-                    "<td><button type='button' onclick='location.href=\"logout\"'>Back</button></td></tr>");
+                    "<td><button type='button' onclick='location.href=\"logout\"'>Logout</button></td></tr>");
             writer.println("</table>");
             writer.println("</form>");
         } else if (isTenant) {
