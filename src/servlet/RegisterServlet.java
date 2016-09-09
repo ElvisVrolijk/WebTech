@@ -72,5 +72,6 @@ public class RegisterServlet extends HttpServlet {
 
         users.add(newUser); //Add the user to the list
         writer.println("Successfully registered as " + username);
+        writer.println("<button type='button' onclick='window.location.hre=\"login\"'>Ok</button>");
     }
 }

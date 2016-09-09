@@ -87,8 +87,8 @@ public class TenantServlet extends AbstractUserServlet {
                     writer.println("<tr><td>No rooms match criteria</td></tr>");
                     break;
                 }
-                writer.println("<button type='button' onclick='window.location.href=\"tenant\"'></button>");
             }
+            writer.println("<tr><td><button type='button' onclick='window.location.href=\"tenant\"'>Back</button></td></tr>");
             writer.println("</table>");
         }
     }
