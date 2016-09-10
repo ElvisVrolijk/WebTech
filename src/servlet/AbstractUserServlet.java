@@ -1,23 +1,21 @@
 package servlet;
 
 import admin.Room;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.omg.CORBA.RepositoryIdHelper;
-import org.w3c.dom.css.Counter;
+import user.Landlord;
+import user.Tenant;
 import user.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
- * This class is a wrapper for the HttpServer.
+ * This class is a wrapper for the HttpServlet.
  * The class adds extra functionalities for servlet that
  * handles logged in users.
  * <p>
@@ -25,25 +23,96 @@ import java.util.Map;
  */
 public abstract class AbstractUserServlet extends HttpServlet {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Properties
+    ///////////////////////////////////////////////////////////////////////////
+
+    private ArrayList<Room> rooms;
+
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext servletContext = getServletContext();
+
+        //Get reference of the HashMap in context
+        HashMap<Landlord, List<Room>> hashMap =
+                (HashMap<Landlord, List<Room>>) servletContext.getAttribute("Rooms");
+
+        //Get all the landlords
+        Set<Landlord> landlords = hashMap.keySet();
+        this.rooms = new ArrayList<>();
+        for (Landlord landlord : landlords) { //Go through all landlords
+            List<Room> landlordRooms = hashMap.get(landlord);
+            this.rooms.addAll(landlordRooms); //Add all rooms to the list
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        trackUser(request, response);
-        checkUser(request, response);
+        this.request = request;
+        this.response = response;
+
+        //Prepare the response
+        response.setStatus(200);
+        response.setContentType("text/html");
+
+        authenticationCheck();
+
+        trackUser();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        trackUser(request, response);
-        checkUser(request, response);
+        this.request = request;
+        this.response = response;
+
+        //Prepare the response
+        response.setStatus(200);
+        response.setContentType("text/html");
+
+        authenticationCheck();
+
+        trackUser();
     }
 
-    void trackUser(HttpServletRequest request, HttpServletResponse response) {
-        //Find the cookie
-        Cookie[] cookies = request.getCookies();
+    /**
+     * Checks if the user is logged in and redirect the
+     * user to the correct page according to the user type.
+     */
+    void authenticationCheck() throws IOException {
+        if (!isLoggedIn()) {
+            response.sendRedirect("/login.html");
+        } else {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("User");
+
+            boolean isTenant = user instanceof Tenant;
+            boolean isLandlord = user instanceof Landlord;
+            boolean usingLandlordServlet = this instanceof LandlordServlet;
+            boolean usingTenantServlet = this instanceof TenantServlet;
+
+            if (isTenant && usingLandlordServlet) {
+                response.sendRedirect("/tenant");
+
+            } else if (isLandlord && usingTenantServlet) {
+                response.sendRedirect("/landlord");
+            }
+        }
+    }
+
+    /**
+     * Counts the amount of times the user visits a page
+     */
+    void trackUser() {
+        Cookie[] cookies = request.getCookies(); //Get all cookies
         Cookie trackingCookie = null;
-        for (Cookie cookie : cookies) {
+        for (Cookie cookie : cookies) { //Go through all cookies
+
+            //Check whether the cookie has name of the servlet that inherits from this class
             if (cookie.getName().equals(this.getServletName())) {
-                trackingCookie = cookie;
+                trackingCookie = cookie; //Set reference of cookie
             }
         }
 
@@ -63,37 +132,21 @@ public abstract class AbstractUserServlet extends HttpServlet {
     }
 
     /**
-     * Checks user properties.
-     * - Whether the user is logged in.
-     * - Redirect the user to the proper page dependant on the user's type.
-     */
-    void checkUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(200);
-        response.setContentType("text/html");
-
-        HttpSession session = request.getSession();
-        if (!isLoggedIn(session)) { //Check whether the user is logged in
-            //User is NOT logged in
-            response.sendRedirect("/login.html");
-        }
-    }
-
-    /**
      * @return Returns true if the user is logged in, otherwise false.
      */
-    boolean isLoggedIn(HttpSession session) {
-        assert session != null : "Session is null";
-
-        User user = (User) session.getAttribute("User");
-        return user != null;
+    boolean isLoggedIn() {
+        HttpSession session = request.getSession(); //Get session
+        return session.getAttribute("User") != null; //Check whether session attribute is null
     }
 
     /**
      * @return Returns the room specified by the id, otherwise return null if not found.
      */
     Room getRoom(int id) {
+        assert id >= 0 : "id can not be negative";
+
         List<Room> rooms = getRooms();
-        for (Room room : rooms) {
+        for (Room room : rooms) { //Go through all the rooms
             if (room.getId() == id) {
                 return room;
             }
@@ -105,7 +158,21 @@ public abstract class AbstractUserServlet extends HttpServlet {
      * @return Returns a list of rooms.
      */
     List<Room> getRooms() {
-        ServletContext servletContext = getServletContext();
-        return (List<Room>) servletContext.getAttribute("Rooms");
+        return rooms;
     }
+
+    /**
+     * @param landlord Landlord that owns the rooms.
+     * @return Returns a list of rooms that belong to the landlord specified.
+     */
+    List<Room> getRooms(Landlord landlord) {
+        ServletContext servletContext = getServletContext();
+
+        //Get reference of the HashMap in context
+        HashMap<Landlord, List<Room>> hashMap =
+                (HashMap<Landlord, List<Room>>) servletContext.getAttribute("Rooms");
+
+        return hashMap.get(landlord);
+    }
+
 }

@@ -1,11 +1,8 @@
 package servlet;
 
 import admin.Room;
-import user.Landlord;
 import user.Tenant;
-import user.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,73 +20,96 @@ import java.util.List;
 @WebServlet("/tenant")
 public class TenantServlet extends AbstractUserServlet {
 
+    @Override
+    public void init() throws ServletException {
+        super.init();
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request, response);
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("User");
-
-        boolean isTenant = user instanceof Tenant;
-        boolean isLandlord = user instanceof Landlord;
-        if (isTenant) {
+        if (!response.isCommitted()) {
             request.getRequestDispatcher("/WEB-INF/tenant.html")
                     .forward(request, response);
-        } else if (isLandlord) {
-            response.sendRedirect("/login.html");
         }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("User");
+        boolean rentRoom = request.getParameter("rent_room") != null;
+        PrintWriter writer = response.getWriter();
 
-        boolean isTenant = user instanceof Tenant;
-        if (isTenant) {
-            ServletContext servletContext = getServletContext();
-            List<Room> rooms = (List<Room>) servletContext.getAttribute("Rooms");
+        if (rentRoom) {
+            HttpSession session = request.getSession(); //Get session
+            Tenant tenant = (Tenant) session.getAttribute("User"); //Get user that rented the room
 
-            PrintWriter writer = response.getWriter();
-
-            String city = request.getParameter("city");
-            String sizeParam = request.getParameter("size");
-            String priceParam = request.getParameter("price");
-
-            int size = 0;
-            int price = 0;
-            if (sizeParam != null && priceParam != null) {
-                if (!sizeParam.isEmpty() && !priceParam.isEmpty()) {
-                    size = Integer.parseInt(sizeParam);
-                    price = Integer.parseInt(priceParam);
-                }
+            if (tenant.hasRented()) {
+                writer.println("You have already rented a room <button type='button' onclick='window.location.href=\"tenant\"'>Ok</button>");
+                return;
             }
 
-            writer.println("<table>");
-            writer.println("<tr>");
-            writer.println("<th>City</th>");
-            writer.println("<th>Size</th>");
-            writer.println("<th>Price</th>");
-            writer.println("</tr>");
-            for (Room room : rooms) {
-                boolean sameCity = room.getCity().equals(city);
-                boolean isBigger = room.getSize() >= size;
-                boolean isLessExpensive = room.getPrice() <= price;
+            String roomId = request.getParameter("rent_room"); //Get room id
+            Room room = getRoom(Integer.parseInt(roomId)); //Get the room reference
 
-                if (sameCity || isBigger || isLessExpensive) {
-                    writer.println("<tr>");
-                    writer.println("<td>" + room.getCity() + "</td>");
-                    writer.println("<td>" + room.getSize() + "</td>");
-                    writer.println("<td>" + room.getPrice() + "</td>");
-                    writer.println("<td><button type='submit' name='Rent' value='" + room.getId() + "'>Rent</button></td>");
-                    writer.println("</tr>");
-                } else {
-                    writer.println("<tr><td>No rooms match criteria</td></tr>");
-                    break;
-                }
-            }
-            writer.println("<tr><td><button type='button' onclick='window.location.href=\"tenant\"'>Back</button></td></tr>");
-            writer.println("</table>");
+            tenant.rentRoom(room); //Rent the room
+
+            writer.println("You have rented a room. <button type='button' onclick='window.location.href=\"tenant\"'>Ok</button>");
+            return;
         }
+        List<Room> rooms = getRooms(); //Get list of rooms from all landlords
+
+        //Get values
+        String cityParam = request.getParameter("city");
+        String sizeParam = request.getParameter("size");
+        String priceParam = request.getParameter("price");
+
+        boolean sizeValid = sizeParam == null || !sizeParam.isEmpty();
+        boolean priceValid = priceParam == null || !priceParam.isEmpty();
+
+        if (!sizeValid) {
+            //In case the user didn't type any value
+            sizeParam = "0";
+        }
+
+        if (!priceValid) {
+            //In case the user didn't type any value
+            priceParam = String.valueOf(Integer.MAX_VALUE);
+        }
+
+
+        writer.println("<table>");
+        writer.println("<form method='post'>");
+        writer.println("<tr>");
+        writer.println("<th>City</th>");
+        writer.println("<th>Size</th>");
+        writer.println("<th>Price</th>");
+        writer.println("</tr>");
+
+        for (Room room : rooms) {
+            boolean sameCity = room.getCity().equals(cityParam) || cityParam.equals("");
+            boolean isBigger = room.getSize() >= Integer.parseInt(sizeParam);
+            boolean isLessExpensive = room.getPrice() <= Integer.parseInt(priceParam);
+
+            if (sameCity && isBigger && isLessExpensive) {
+                if (room.isRented()) {
+                    continue; //Skip this iteration
+
+                }
+
+                writer.println("<tr>");
+                writer.println("<td>" + room.getCity() + "</td>");
+                writer.println("<td>" + room.getSize() + "</td>");
+                writer.println("<td>" + room.getPrice() + "</td>");
+                writer.println("<td><button type='submit' name='rent_room' value='" + room.getId() + "'>Rent</button></td>");
+                writer.println("</tr>");
+            } else {
+                writer.println("<tr><td>No rooms match criteria</td></tr>");
+                break;
+            }
+        }
+        writer.println("<tr><td><button type='button' onclick='window.location.href=\"tenant\"'>Back</button></td></tr>");
+        writer.println("</form>");
+        writer.println("</table>");
     }
 }

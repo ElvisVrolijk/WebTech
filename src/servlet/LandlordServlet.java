@@ -2,10 +2,7 @@ package servlet;
 
 import admin.Room;
 import user.Landlord;
-import user.Tenant;
-import user.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,170 +22,165 @@ public class LandlordServlet extends AbstractUserServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doGet(request, response); //Checks whether the user is logged in
 
-        //Get session
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("User");
+        List<Room> rooms = getRooms();
+        PrintWriter writer = response.getWriter();
 
-        boolean isLandlord = user instanceof Landlord;
-        boolean isTenant = user instanceof Tenant;
-        if (isLandlord) {
-            ServletContext servletContext = getServletContext();
-            List<Room> rooms = (List<Room>) servletContext.getAttribute("Rooms");
-            PrintWriter writer = response.getWriter();
-
-            if (rooms.size() == 0) {
-                //Incase there is no room
-                writer.println("No rooms to show");
-                return;
-            }
-
-            //Dynamic HTML
-            writer.println("<form method='post'>");
-            writer.println("<table>");
-            writer.println("<tr>");
-            writer.println("<th>City</th>");
-            writer.println("<th>Size</th>");
-            writer.println("<th>Price</th>");
-            writer.println("</tr>");
-            for (Room room : rooms) {
-                writer.println("<tr>");
-                writer.println("<td>" + room.getCity() + "</td>");
-                writer.println("<td>" + room.getSize() + "</td>");
-                writer.println("<td>" + room.getPrice() + "</td>");
-                writer.println("<td><button type='submit' name='modify_room' value='" + room.getId() + "'>Modify</button></td>");
-                writer.println("<td><button type='submit' name='delete_room' value='" + room.getId() + "'>Delete</button></td>");
-                writer.println("</tr>");
-            }
-            writer.println("<tr><td><button type='submit' name='add_room' value='0'>Add</button></td>" +
-                    "<td><button type='button' onclick='location.href=\"logout\"'>Logout</button></td></tr>");
-            writer.println("</table>");
-            writer.println("</form>");
-        } else if (isTenant) {
-            response.sendRedirect("/tenant");
+        if (rooms.size() == 0) {
+            //In case there is no room
+            writer.println("<form method=\"post\">\n" +
+                    "    <table>\n" +
+                    "        <tr><td>No rooms to show</td></tr>\n" +
+                    "        <tr><td><button type=\"submit\" name=\"add_room\">Add</button></td><td><button type=\"button\" onclick=\"window.location.href='/logout'\">Logout</button></td></tr>\n" +
+                    "    </table>\n" +
+                    "</form>");
+            return;
         }
+
+        //Dynamic HTML
+        writer.println("<form method='post'>");
+        writer.println("<table>");
+        writer.println("<tr>");
+        writer.println("<th>City</th>");
+        writer.println("<th>Size</th>");
+        writer.println("<th>Price</th>");
+        writer.println("</tr>");
+        for (Room room : rooms) {
+            writer.println("<tr>");
+            writer.println("<td>" + room.getCity() + "</td>");
+            writer.println("<td>" + room.getSize() + "</td>");
+            writer.println("<td>" + room.getPrice() + "</td>");
+            writer.println("<td><button type='submit' name='modify_room' value='" + room.getId() + "'>Modify</button></td>");
+            writer.println("<td><button type='submit' name='delete_room' value='" + room.getId() + "'>Delete</button></td>");
+            writer.println("</tr>");
+        }
+        writer.println("<tr><td><button type='submit' name='add_room' value='0'>Add</button></td>" +
+                "<td><button type='button' onclick='location.href=\"logout\"'>Logout</button></td></tr>");
+        writer.println("</table>");
+        writer.println("</form>");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response); //Checks whether the user is logged in
 
-        //Get session
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("User");
+        boolean isDeleteRoom = request.getParameter("delete_room") != null;
+        boolean isModifyRoom = request.getParameter("modify_room") != null;
+        boolean isSaveRoom = request.getParameter("save_room") != null;
+        boolean isAddRoom = request.getParameter("add_room") != null;
 
-        //Check which user is online
-        boolean isLandlord = user instanceof Landlord;
-        boolean isTenant = user instanceof Tenant;
-        if (isLandlord) { //Landlord
-            //Get the input from the user
-            String deleteRoom = request.getParameter("delete_room");
-            String modifyRoom = request.getParameter("modify_room");
-            String saveRoom = request.getParameter("save_room");
-            String addRoom = request.getParameter("add_room");
-
-            if (deleteRoom != null) {
-                //Remove
-                int id = Integer.parseInt(deleteRoom);
-                deleteRoom(id);
-                response.sendRedirect("/landlord");
-            } else if (modifyRoom != null) {
-                //Modify
-                int id = Integer.parseInt(modifyRoom);
-
-                PrintWriter writer = response.getWriter();
-                new ModifyPage(writer, id);
-            } else if (saveRoom != null) {
-                //Save
-                int id = Integer.parseInt(saveRoom);
-                new SavingPage(id, request);
-                response.sendRedirect("/landlord");
-            } else if (addRoom.equals("0")) {
-                //Add room form
-                PrintWriter writer = response.getWriter();
-                new AddPage(writer);
-            } else if (addRoom.equals("1")) {
-                //Add room
-                String city = request.getParameter("city");
-                String size = request.getParameter("size");
-                String price = request.getParameter("price");
-                if (city != null && size != null && price != null) {
-                    if (city.length() > 0 && size.length() > 0 && price.length() > 0) {
-                        addRoom(city, Integer.parseInt(size), Integer.parseInt(price));
-                        response.sendRedirect("/landlord");
-
-                    }
-                }
-            }
-        } else if (isTenant) { //Tenant
-            response.sendRedirect("/tenant");
-        }
-    }
-
-    private void deleteRoom(int id) {
-        ServletContext servletContext = getServletContext();
-        List<Room> rooms = (List<Room>) servletContext.getAttribute("Rooms");
-
-        Room roomToDelete = null;
-        for (Room room : rooms) {
-            if (room.getId() == id) {
-                roomToDelete = room;
-            }
-        }
-        rooms.remove(roomToDelete);
-    }
-
-    private void addRoom(String city, int size, int price) {
-        List<Room> rooms = getRooms();
-        rooms.add(new Room(size, price, city));
-    }
-
-    private class ModifyPage {
-        ModifyPage(PrintWriter writer, int id) {
-            Room room = getRoom(id);
-
-            writer.println("<form method='post'>");
-            writer.println("<table>");
-            writer.println("<tr><td>City</td><td><input type='text' name='city' value='" + room.getCity() + "' ></td></tr>");
-            writer.println("<tr><td>Size</td><td><input type='text' name='size' value='" + room.getSize() + "' ></td></tr>");
-            writer.println("<tr><td>Price</td><td><input type='text' name='price' value='" + room.getPrice() + "' ></td></tr>");
-            writer.println("<tr><td><button type='submit' name='save_room' value='" + room.getId() + "'>Save</button></td>" +
-                    "<td><button type='button' onclick='window.location.href=\"landlord\"'>Cancel</button></td></tr>");
-            writer.println("</table>");
-            writer.println("</form>");
-        }
-    }
-
-    private class SavingPage {
-        SavingPage(int id, HttpServletRequest request) {
-            Room room = getRoom(id);
-
-            String city = request.getParameter("city");
-            String size = request.getParameter("size");
-            String price = request.getParameter("price");
-
-            if (city != null && size != null && price != null) { //Check if parameters are valid
-                if (city.length() != 0 && size.length() > 0 && price.length() > 0) {
-                    room.setCity(city);
-                    room.setSize(Integer.parseInt(size)); //Parse string to integer
-                    room.setPrice(Integer.parseInt(price)); //Parse string to integer
-                }
+        if (isDeleteRoom) {
+            //Delete
+            String roomId = request.getParameter("delete_room"); //Get room id
+            deleteRoom(roomId); //Process the removal of room
+            response.sendRedirect("/landlord"); //Redirect
+        } else if (isModifyRoom) {
+            //Modify Form
+            String roomId = request.getParameter("modify_room"); //Get room id
+            loadModifyForm(roomId); //Load the modification form
+        } else if (isSaveRoom) {
+            //Save
+            String roomId = request.getParameter("save_room");
+            modifyRoom(roomId);
+            response.sendRedirect("/landlord"); //Redirect
+        } else if (isAddRoom) {
+            //Add
+            String value = request.getParameter("add_room");
+            if (value.equals("add")) {
+                //Process
+                addRoom(); //Add the new room to the landlord room list
+                response.sendRedirect("/landlord"); //Redirect
+            } else {
+                //Form
+                loadAddForm();
             }
         }
     }
 
-    private class AddPage {
+    private void addRoom() throws ServletException, IOException {
+        HttpSession session = request.getSession(); //Get session
+        Landlord landlord = (Landlord) session.getAttribute("User"); //Get current landlord
 
-        AddPage(PrintWriter writer) {
-            writer.println("<form method='post'>");
-            writer.println("<table>");
-            writer.println("<tr><td>City</td><td><input type='text' name='city' placeholder='City'</td></tr>");
-            writer.println("<tr><td>Size</td><td><input type='text' name='size' placeholder='Size in Square Meters'</td></tr>");
-            writer.println("<tr><td>Price</td><td><input type='text' name='price' placeholder='Price'</td></tr>");
-            writer.println("<tr><td><button type='submit' name='add_room' value='1'>Add</button></td>" +
-                    "<td><button type='button' onclick='window.location.href=\"landlord\"'>Cancel</button></td></tr>");
-            writer.println("</table>");
-            writer.println("</form>");
+        //Gather form values
+        String cityParam = request.getParameter("city");
+        String sizeParam = request.getParameter("size");
+        String priceParam = request.getParameter("price");
+
+        boolean cityValid = cityParam != null && cityParam.length() > 0;
+        boolean sizeValid = sizeParam != null && sizeParam.length() > 0;
+        boolean priceValid = priceParam != null && priceParam.length() > 0;
+
+        if (cityValid && sizeValid && priceValid) {
+            List<Room> rooms = getRooms(landlord); //Get the rooms from landlord
+
+            rooms.add(new Room( //Add new room
+                    Integer.parseInt(sizeParam),
+                    Integer.parseInt(priceParam),
+                    cityParam));
         }
     }
 
+    /**
+     * Delete the room specified.
+     */
+    private void deleteRoom(String parameter) {
+        assert parameter != null : "Parameter is null";
+        int id = Integer.parseInt(parameter); //Translate room id
+
+        Room room = getRoom(id); //Get room by id
+
+        HttpSession session = request.getSession(); //Get session
+        Landlord landlord = (Landlord) session.getAttribute("User"); //Get the current landlord
+
+        List<Room> rooms = getRooms(landlord); //Get rooms that belong to the landlord
+        rooms.remove(room); //Remove the room from the list
+    }
+
+    private void modifyRoom(String parameter) {
+        int roomId = Integer.parseInt(parameter); //Translate room id
+        Room room = getRoom(roomId); //Get room
+
+        String cityParam = request.getParameter("city");
+        String sizeParam = request.getParameter("size");
+        String priceParam = request.getParameter("price");
+
+        boolean cityValid = cityParam != null && cityParam.length() > 0;
+        boolean sizeValid = sizeParam != null && sizeParam.length() > 0;
+        boolean priceValid = priceParam != null && priceParam.length() > 0;
+        if (cityValid && sizeValid && priceValid) {
+            room.setCity(cityParam);
+
+            int size = Integer.parseInt(sizeParam);
+            room.setSize(size);
+
+            int price = Integer.parseInt(priceParam);
+            room.setPrice(price);
+        }
+    }
+
+    private void loadAddForm() throws IOException {
+        PrintWriter writer = response.getWriter();
+        writer.println("<form method=\"post\">\n" +
+                "    <table>\n" +
+                "        <tr><td>City</td><td><input type=\"text\" name=\"city\" value=\"\"></td></tr>\n" +
+                "        <tr><td>Size</td><td><input type=\"text\" name=\"size\" value=\"\"></td></tr>\n" +
+                "        <tr><td>Price</td><td><input type=\"text\" name=\"price\" value=\"\"></td></tr>\n" +
+                "        <tr><td><button type=\"submit\" name=\"add_room\" value=\"add\">Add</button></td><td><button type=\"button\" onclick=\"window.location.href='landlord'\">Back</button></td></tr>\n" +
+                "    </table>\n" +
+                "</form>");
+    }
+
+    private void loadModifyForm(String parameter) throws IOException {
+        int roomId = Integer.parseInt(parameter); //Translate room id
+        Room room = getRoom(roomId); //Get room
+
+        PrintWriter writer = response.getWriter();
+        writer.println("<form method=\"post\">\n" +
+                "    <table>\n" +
+                "        <tr><td>City</td><td><input type=\"text\" name=\"city\" value=\"" + room.getCity() + "\"></td></tr>\n" +
+                "        <tr><td>Size</td><td><input type=\"text\" name=\"size\" value=\"" + room.getSize() + "\"></td></tr>\n" +
+                "        <tr><td>Price</td><td><input type=\"text\" name=\"price\" value=\"" + room.getPrice() + "\"></td></tr>\n" +
+                "        <tr><td><button type=\"submit\" name=\"save_room\" value=\"" + room.getId() + "\">Save</button></td><td><button type=\"button\" onclick=\"window.location.href='landlord'\">Back</button></td></tr>\n" +
+                "    </table>\n" +
+                "</form>");
+    }
 }

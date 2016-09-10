@@ -3,8 +3,6 @@
  */
 
 import admin.Room;
-import com.google.gson.Gson;
-import com.sun.xml.internal.stream.util.BufferAllocator;
 import user.Landlord;
 import user.Tenant;
 import user.User;
@@ -16,11 +14,9 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 @javax.servlet.annotation.WebListener()
 public class Listener implements ServletContextListener,
@@ -31,6 +27,7 @@ public class Listener implements ServletContextListener,
     ///////////////////////////////////////////////////////////////////////////
     private List<User> users = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
+    private HashMap<Landlord, List<Room>> landlordRoomHashMap = new HashMap<>();
 
     // Public constructor is required by servlet spec
     public Listener() {
@@ -45,15 +42,20 @@ public class Listener implements ServletContextListener,
          You can initialize servlet context related data here.
       */
 
-        users.add(new Landlord("Derwin", "Tromp", "admin", "admin"));
-        users.add(new Tenant("Elvis", "Vrolijk", "user", "user"));
+        Landlord landlord = new Landlord("Derwin", "Tromp", "admin", "admin");
+        Tenant tenant = new Tenant("Elvis", "Vrolijk", "user", "user");
+
+        users.add(landlord);
+        users.add(tenant);
 
         rooms.add(new Room(50, 800, "Enschede"));
         rooms.add(new Room(60, 900, "Enschede"));
 
+        landlordRoomHashMap.put(landlord, rooms);
+
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("Users", users);
-        servletContext.setAttribute("Rooms", rooms);
+        servletContext.setAttribute("Rooms", landlordRoomHashMap);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

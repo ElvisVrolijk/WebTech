@@ -17,6 +17,8 @@ public class Room {
     private int price;
     private String city;
 
+    private boolean rented = false;
+
     /**
      * Constructor
      *
@@ -38,7 +40,6 @@ public class Room {
     ///////////////////////////////////////////////////////////////////////////
     // Methods
     ///////////////////////////////////////////////////////////////////////////
-
 
     public int getId() {
         return id;
@@ -66,5 +67,13 @@ public class Room {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public boolean isRented() {
+        return rented;
+    }
+
+    public void setRented() {
+        rented = true;
     }
 }
